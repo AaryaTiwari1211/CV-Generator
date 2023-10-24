@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.form-container {
+  background-color: #333;
+  padding: 20px;
+  color: white;
+  border: 20px #0681e6; /* Set the border with a width of 10px and color blue */
+  padding: 20px; /* Add padding to create space between the content and the border */
+  border-radius: 4px;
+  text-align: center;
+}
+
+.img-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  width: 400px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: brightness(120%) saturate(160%); /* Increase saturation to make the logo sharper */
+  image-rendering: auto;
+  font-weight: bold;
+}
+
+.form-description {
+  font-size: 16px;
+  font-family: Verdana, sans-serif;
+  font-weight: bold;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px; /* Remove the bottom margin */
+  margin-top: -20px;
+  color: #fff;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 80%;
+  color: black;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  background-color: #0681e6;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 20px;
+  margin-top: 15px;
+  border-color: #060933;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.error,
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.personal-information,
+.education,
+.work-experience,
+.projects,
+.other-information {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+  max-width: 1000px; /* Adjust the width as per your requirement */
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.group-heading {
+  display: flex;
+  align-items: center;
+  background-color: #0681e6; /* Set the background color for the headings */
+  color: #ffffff; /* Set the text color to white */
+  font-family: "Montserrat", sans-serif;
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 25px;
+  border: none;
+  padding: 10px; /* Adjust the padding as needed */
+  border-radius: 20px;
+  display: block;
+}
+
+.education-heading,
+.work-experience-heading,
+.create-work-experience-heading,
+.project-heading,
+.create-project-heading {
+  display: inline;
+  align-items: center;
+  background-color: #2a19af; /* Set the background color for the headings */
+  color: #ffffff; /* Set the text color to white */
+  font-family: "Montserrat", sans-serif;
+  font-weight: bolder;
+  margin-top: auto;
+  margin-bottom: 150px;
+  border: none;
+  padding: 10px; /* Adjust the padding as needed */
+  border-radius: 20px;
+}
+
+.label {
+  background-color: #100b55; /* Set the background color for the labels */
+  color: #ffffff; /* Set the text color to white */
+  padding: 5px 10px;
+  font-size: 21px; /* Adjust the padding as needed */
+  margin-right: 10px;
+  border-radius: 20px; /* Add spacing between the label and heading text */
+}
+
+.personal-information label,
+.education label,
+.work-experience label,
+.projects label,
+.other-information label {
+  display: block;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.personal-information input,
+.education input,
+.work-experience input,
+.projects input,
+.other-information input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Include padding and border within the width */
+}
+
+.work-experience textarea,
+.projects textarea {
+  width: 100%; /* Adjust the width as per your preference */
+  height: 70px; /* Adjust the height as per your preference */
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+  box-sizing: border-box;
+  line-height: normal;
+  resize: vertical; /* Allow vertical resizing of the textarea */
+  color:black;
+}
+
+.education-space,
+.create-work-experience-space,
+.work-experience-space,
+.project-space {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.add-education,
+.add-create-work-experience,
+.add-project {
+  margin-top: 10px;
+  margin-bottom: 25px; /* Set the background color for the headings */
+}
+
+.add-work-experience {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.add-buttons {
+  background-color: #0681e6; /* Set the background color for the headings */
+  margin: 20px;
+}
+.remove-buttons {
+  background-color: #FF0000; /* Set the background color for the headings */
+  margin: 20px;
+}
+
+.pre-filled-text-container {
+  margin-bottom: 10px;
+  margin-top: 25px;
+}
