@@ -1,7 +1,17 @@
 import React from 'react';
 import '../form.css';
+import { useAppContext } from './context/AppProvider';
+const OtherInfo = () => {
 
-const OtherInfo = ({ formData, handleInputChange }) => {
+    const { otherInfo, setOtherInfo } = useAppContext();
+
+    const handleInfoChange = (event) => {
+        const { name, value } = event.target;
+        setOtherInfo((prevInfo) => ({
+            ...prevInfo,
+            [name]: value,
+        }));
+    };
     return (
         <>
             <div className="other-information">
@@ -13,8 +23,8 @@ const OtherInfo = ({ formData, handleInputChange }) => {
                     type="text"
                     id="skills"
                     name="skills"
-                    value={formData.skills} // Use formData.skills to access the skills value from the form data
-                    onChange={handleInputChange} // Use handleInputChange directly to update the form data
+                    value={otherInfo.skills} // Use formData.skills to access the skills value from the form data
+                    onChange={handleInfoChange} // Use handleInputChange directly to update the form data
                 />
 
                 <label htmlFor="languages">Languages:</label>
@@ -22,8 +32,8 @@ const OtherInfo = ({ formData, handleInputChange }) => {
                     type="text"
                     id="languages"
                     name="languages"
-                    value={formData.languages} // Use formData.languages to access the languages value from the form data
-                    onChange={handleInputChange} // Use handleInputChange directly to update the form data
+                    value={otherInfo.languages} // Use formData.languages to access the languages value from the form data
+                    onChange={handleInfoChange} // Use handleInputChange directly to update the form data
                 />
             </div>
         </>

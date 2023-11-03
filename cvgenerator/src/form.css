@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #333;
 }
 
 code {
@@ -13,42 +14,13 @@ code {
     monospace;
 }
 
-.form-container {
-  background-color: #333;
-  padding: 20px;
-  color: white;
-  border: 20px #0681e6; /* Set the border with a width of 10px and color blue */
-  padding: 20px; /* Add padding to create space between the content and the border */
-  border-radius: 4px;
-  text-align: center;
-}
-
-.img-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
 
 .logo {
   width: 400px;
   height: auto;
-  margin-bottom: 20px;
   filter: brightness(120%) saturate(160%); /* Increase saturation to make the logo sharper */
   image-rendering: auto;
   font-weight: bold;
-}
-
-.form-description {
-  font-size: 16px;
-  font-family: Verdana, sans-serif;
-  font-weight: bold;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 30px; /* Remove the bottom margin */
-  margin-top: -20px;
-  color: #fff;
-  text-align: center;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .form-group {
@@ -60,6 +32,7 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
+  color: #ffffff;
 }
 
 input {
@@ -71,7 +44,7 @@ input {
   color: black;
 }
 
-button {
+/* button {
   padding: 10px 20px;
   font-size: 18px;
   font-family: "Montserrat", sans-serif;
@@ -82,16 +55,10 @@ button {
   border-radius: 20px;
   margin-top: 15px;
   border-color: #060933;
-}
+} */
 
 button:hover {
   background-color: #45a049;
-}
-
-.error,
-.error-message {
-  color: red;
-  margin-top: 10px;
 }
 
 .personal-information,
@@ -106,20 +73,21 @@ button:hover {
   max-width: 1000px; /* Adjust the width as per your requirement */
   margin: 0 auto;
   margin-top: 30px;
+  text-align: center;
 }
 
 .group-heading {
   display: flex;
   align-items: center;
-  background-color: #0681e6; /* Set the background color for the headings */
-  color: #ffffff; /* Set the text color to white */
+  background-color: #0681e6;
+  color: #ffffff;
   font-family: "Montserrat", sans-serif;
   font-size: 21px;
   font-weight: bold;
   margin-top: 5px;
   margin-bottom: 25px;
   border: none;
-  padding: 10px; /* Adjust the padding as needed */
+  padding: 10px;
   border-radius: 20px;
   display: block;
 }

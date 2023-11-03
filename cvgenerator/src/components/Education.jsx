@@ -1,14 +1,42 @@
 import React, { useState } from 'react';
 import '../form.css';
+import { useAppContext } from './context/AppProvider';
+const Education = () => {
 
-const Education = ({ formData, handleEducationChange, handleAddEducation, handleRemoveEducation }) => {
+    const { educations, setEducations } = useAppContext();
+
+    const handleEducationChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedEducations = [...educations];
+        updatedEducations[index][name] = value;
+        setEducations(updatedEducations);
+    };
+    const handleAddEducation = () => {
+        setEducations([...educations, {
+            id: educations.length + 1,
+            universityName: '',
+            city: '',
+            country: '',
+            startDate: '',
+            endDate: '',
+            degreeName: '',
+            gpa: '',
+            relevantCourses: '',
+        }]);
+    }
+
+    const handleRemoveEducation = (index) => {
+        setEducations((prevEducations) =>
+            prevEducations.filter((_, i) => i !== index)
+        );
+    };
     return (
         <>
             <div className="education">
                 <h2 className="group-heading">
                     <span className="label">B</span> Education
                 </h2>
-                {formData.educations.map((education, index) => (
+                {educations.map((education, index) => (
                     <div key={education.id}>
                         {index > 0 && <div className="education-space" />}
                         <h3 className="education-heading">Education {index + 1}</h3>
@@ -75,16 +103,16 @@ const Education = ({ formData, handleEducationChange, handleAddEducation, handle
 
                         />
 
-                        <button className='remove-buttons' onClick={() => handleRemoveEducation(index)}>Remove Education</button>
+                        <button className="px-4 py-2 m-5 text-white bg-red-500 rounded" onClick={() => handleRemoveEducation(index)}>Remove Education</button>
                     </div>
                 ))}
-                <div className="add-education">
+                <div className="w-full text-center">
                     <button
                         type="button"
                         onClick={() => {
                             handleAddEducation();
                         }}
-                        className='add-buttons'
+                        className="px-4 py-2 text-white bg-blue-500 rounded"
                     >
                         Add Education
                     </button>

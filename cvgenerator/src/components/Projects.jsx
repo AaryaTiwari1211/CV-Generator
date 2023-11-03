@@ -1,14 +1,66 @@
 import React from 'react';
 import '../form.css';
+import { useAppContext } from './context/AppProvider';
+const Projects = () => {
+    const { projects, setProjects, createProject, setCreateProject, formData1, formData2 } = useAppContext();
 
-const Projects = ({ formData1, formData2, handleProjectChange, handleAddProject, handleRemoveProject, handleAddCreateProject, handleRemoveCreateProject, handleCreateProjectChange }) => {
+    const handleProjectChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedProjects = [...projects];
+        updatedProjects[index][name] = value;
+        setProjects(updatedProjects);
+    };
+
+    const handleAddProject = () => {
+        setProjects((prevProjects) => [
+            ...prevProjects,
+            {
+                id: prevProjects.length + 1,
+                title: '',
+                date: '',
+                city: '',
+                country: '',
+                position: '',
+                description: '',
+            },
+        ]);
+    };
+
+    const handleRemoveProject = (index) => {
+        setProjects((prevProjects) =>
+            prevProjects.filter((_, i) => i !== index)
+        );
+    };
+
+    const handleCreateProjectChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedCreateProject = [...createProject];
+        updatedCreateProject[index][name] = value;
+        setCreateProject(updatedCreateProject);
+    }
+
+    const handleAddCreateProject = () => {
+        setCreateProject((prevProjects) => [
+            ...prevProjects,
+            {
+                id: prevProjects.length + 1,
+                userPrompt: '',
+            },
+        ]);
+    }
+
+    const handleRemoveCreateProject = (index) => {
+        setCreateProject((prevProjects) =>
+            prevProjects.filter((_, i) => i !== index)
+        );
+    }
     return (
         <>
             <div className="projects">
                 <h2 className="group-heading">
                     <span className="label">D</span> Projects & Extra-curricular Experiences
                 </h2>
-                {formData1.projects.map((project, index) => (
+                {projects.map((project, index) => (
                     <>
                         <div key={project.id}>
                             {index > 0 && <div className="project-space" />}
@@ -59,28 +111,28 @@ const Projects = ({ formData1, formData2, handleProjectChange, handleAddProject,
                                 onChange={(event) => handleProjectChange(index, event)}
                             ></textarea>
                         </div>
-                        <button className='add-buttons' onClick={() => handleRemoveProject(index)}>Delete</button>
+                        <button className="px-4 py-2 m-5 text-white bg-red-500 rounded" onClick={() => handleRemoveProject(index)}>Delete Project</button>
                     </>
                 ))}
                 {
-                    formData2.createProject.map((project1, index) => (
+                    createProject.map((project1, index) => (
                         <div key={project1.id}>
-                            <label>{`Your Prompt ${index+1}:`}</label>
+                            <label>{`Your Prompt ${index + 1}:`}</label>
                             <textarea
                                 name="userPrompt"
                                 value={project1.userPrompt || ''}
                                 onChange={(event) => handleCreateProjectChange(index, event)}
                             ></textarea>
-                            <button className='remove-buttons' onClick={() => handleRemoveCreateProject(index)}>Delete Created Project</button>
+                            <button className="px-4 py-2 m-5 text-white bg-red-500 rounded" onClick={() => handleRemoveCreateProject(index)}>Delete Created Project</button>
                         </div>
                     ))
                 }
-                
-                <div className="add-project">
-                    <button type='button' className='add-buttons' onClick={handleAddProject}>
+
+                <div className="flex justify-center gap-10">
+                    <button type='button' className="px-4 py-2 text-white bg-blue-500 rounded" onClick={handleAddProject}>
                         Add Project
                     </button>
-                    <button type='button' className='add-buttons' onClick={handleAddCreateProject}>
+                    <button type='button' className="px-4 py-2 text-white bg-blue-500 rounded" onClick={handleAddCreateProject}>
                         Create Project
                     </button>
                 </div>

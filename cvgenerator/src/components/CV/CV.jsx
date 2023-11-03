@@ -6,21 +6,20 @@ import logo from '../../assets/logo.png'
 import { Packer } from "docx";
 import DocumentCreator from "../cv-generator";
 import { useNavigate } from 'react-router-dom';
-
+import { useAppContext } from '../context/AppProvider';
 
 const CV = ({ result }) => {
     const navigate = useNavigate();
+    const { personalInfo } = useAppContext();
     const navigateHome = () => {
         navigate('/');
     };
+    const navigateSOP = () => {
+        navigate('/sopform');
+    };
+
     useEffect(() => {
-        console.log(result)
-        console.log(result.personalInfo)
-        console.log(result.workExperiences)
-        console.log(result.educations)
-        console.log(result.projects)
-        console.log(result.createExp)
-        console.log(result.createProject)
+        console.log(personalInfo);
     })
 
     function generateDocx() {
@@ -57,16 +56,13 @@ const CV = ({ result }) => {
     return (
         <>
             <div className='result'>
-                <div className='logo'>
-                    <img src={logo} alt="Logo" className="logo" />
-                </div>
                 <div>
                     <p>
                         Your Resume has been generated. Click the button to download your Resume
                     </p>
                 </div>
                 <div className='download'>
-                    <button className="btn" onClick={generateDocx}>Download Resume</button>
+                    <button className="px-4 py-2 m-5 text-white bg-blue-500 rounded" onClick={generateDocx}>Download Resume</button>
                     <ToastContainer
                         position="top-right"
                         autoClose={5000}
@@ -79,7 +75,8 @@ const CV = ({ result }) => {
                         pauseOnHover
                         theme="dark"
                     />
-                    <button className='btn' onClick={navigateHome}>Create again</button>
+                    <button className='px-4 py-2 m-5 text-white bg-blue-500 rounded' onClick={navigateHome}>Create again</button>
+                    <button className='px-4 py-2 m-5 text-white bg-blue-500 rounded' onClick={navigateSOP}>Generate SOP</button>
                 </div>
             </div>
         </>

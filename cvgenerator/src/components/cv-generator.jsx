@@ -49,7 +49,6 @@
                 },
               }),
 
-
               this.createHeading("Education"),
               ...educations
                 .map(education => {
@@ -65,8 +64,7 @@
                   );
                   arr.push(
                     this.createRoleText(
-                      `Majors in ${education.degreeName},Honours in ${education.relevantCourses
-                      } | GPA: ${education.gpa}`,
+                      `${education.degreeName}| GPA: ${education.gpa}`,
                       education.relevantCourses
                     )
                   );
@@ -93,7 +91,6 @@
                       new Date(position.endDate), 
                       // `${position.startDate} - ${position.endDate}`,
                       `${position.city}, ${position.country}`
-                      
                     )
                   );
                   arr.push(this.createRoleText(position.titlePositionHeld));

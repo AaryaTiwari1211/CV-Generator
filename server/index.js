@@ -61,7 +61,7 @@ const openai = new OpenAIApi(configuration);
 
 const WorkGPTFunction = async (text) => {
 	const response = await openai.createCompletion({
-		model: "text-davinci-003",
+		model: "gpt-3.5-turbo-instruct",
 		prompt: text,
 		temperature: 0.5,
 		max_tokens: 100,
@@ -73,10 +73,23 @@ const WorkGPTFunction = async (text) => {
 };
 const ProjectGPTFunction = async (text) => {
 	const response = await openai.createCompletion({
-		model: "text-davinci-003",
+		model: "gpt-3.5-turbo-instruct",
 		prompt: text,
 		temperature: 0.5,
-		max_tokens: 70,
+		max_tokens: 75,
+		top_p: 1,
+		frequency_penalty: 1,
+		presence_penalty: 1,
+	});
+	return response.data.choices[0].text;
+};
+
+const SOPGPTFunction = async (text) => {
+	const response = await openai.createCompletion({
+		model: "gpt-3.5-turbo-instruct",
+		prompt: text,
+		temperature: 0.5,
+		max_tokens: 75,
 		top_p: 1,
 		frequency_penalty: 1,
 		presence_penalty: 1,
@@ -101,6 +114,8 @@ const ProjectGPTFunction = async (text) => {
 
 	?7. presence_penalty: 1: Controls the penalty applied to infrequently used tokens, encouraging their inclusion in the generated completion.
 */
+
+
 
 app.post("/cv", async (req, res) => {
 
@@ -169,7 +184,7 @@ app.post("/cv", async (req, res) => {
 			\n${createExp[i].userPrompt}`
 			const create_work_response1 = await WorkGPTFunction(final_work_prompt);
 
-			console.log(`Created Work Experience ${i+1} Response 1 from Model: `, create_work_response1)
+			console.log(`Created Work Experience ${i + 1} Response 1 from Model: `, create_work_response1)
 
 			let work_prompt1 = `${create_work_response1}\n\nI want you to act as a CV writing expert with immense industrial knowledge
 			and enhance the 3 points while following the instructions below:
@@ -179,14 +194,14 @@ app.post("/cv", async (req, res) => {
 
 			let create_work_response2 = await WorkGPTFunction(work_prompt1);
 
-			console.log(`Create Work Experience ${i+1} Response 2 from Model: `, create_work_response2)
+			console.log(`Create Work Experience ${i + 1} Response 2 from Model: `, create_work_response2)
 
 			// let work_prompt2 = `${create_work_response2} I can see that you have still not implemented all the instructions. Please go over your response again and give me the best possible output making sure none of my instructions were missed. `
 			let work_prompt2 = `${create_work_response2}.\n Convert the data into 3 numbered points.\n
 `
 			let create_work_response3 = await WorkGPTFunction(work_prompt2);
 
-			console.log(`Create Work Experience ${i+1} Response 3 from Model: `, create_work_response3)
+			console.log(`Create Work Experience ${i + 1} Response 3 from Model: `, create_work_response3)
 			workExperiences.push({
 				id: generateID(),
 				companyName: "<Company Name>",
@@ -207,7 +222,7 @@ app.post("/cv", async (req, res) => {
 			${createProject[i].userPrompt}`
 			const create_project_response1 = await ProjectGPTFunction(final_project_prompt);
 
-			console.log(`Created Project ${i+1} Response 1 from Model: `, create_project_response1)
+			console.log(`Created Project ${i + 1} Response 1 from Model: `, create_project_response1)
 
 			let create_project_prompt1 = `${create_project_response1}
 			Please act as a CV writing expert with immense industrial knowledge to personalize the 2 points while following the instructions below: \n\n
@@ -216,11 +231,11 @@ app.post("/cv", async (req, res) => {
 			3. Make a mention of any relevant tools and frameworks if necessary.`
 
 			let create_project_response2 = await ProjectGPTFunction(create_project_prompt1);
-			console.log(`Created Project ${i+1} Response 2 from Model: `, create_project_response2)
+			console.log(`Created Project ${i + 1} Response 2 from Model: `, create_project_response2)
 
 			let create_project_prompt2 = `${create_project_response2}.\n Convert the description into 2 numbered points in a proper format.\n`
 			let create_project_response3 = await ProjectGPTFunction(create_project_prompt2);
-			console.log(`Created Project ${i+1} Response 3 from Model: `, create_project_response3)
+			console.log(`Created Project ${i + 1} Response 3 from Model: `, create_project_response3)
 
 
 			projects.push({
@@ -253,6 +268,25 @@ app.post("/cv", async (req, res) => {
 	res.json({
 		message: "Request successful!",
 		data: newEntry
+	});
+});
+
+app.post('/sop', async (req, res) => {
+	// Process the SOP related data or generate an SOP here
+	const { questions } = req.body;
+	// Perform your SOP generation or processing logic here
+	if(questions.essays == "Yes")
+	{
+		questions.essays = "I have written essays on the following topics: \n\n"
+		for(let i=0; i<questions.essayTopics.length; i++)
+		{
+			questions.essays += `${i+1}. ${questions.essayTopics[i]} \n`
+		}
+		questions.essays += "\n"
+	}
+	res.json({
+		message: "SOP request successful",
+		sop: questions,
 	});
 });
 

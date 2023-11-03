@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../form.css';
-
-const PersonalInfo = ({ formData, handleInputChange }) => {
+import { useAppContext } from './context/AppProvider';
+const PersonalInfo = () => {
     const [errors, setErrors] = useState({
         name: false,
         email: false,
@@ -10,6 +10,16 @@ const PersonalInfo = ({ formData, handleInputChange }) => {
         city: false,
         country: false,
     });
+
+    const {personalInfo, setPersonalInfo} = useAppContext();
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setPersonalInfo((prevInfo) => ({
+            ...prevInfo,
+            [name]: value,
+        }));
+    };
 
     const validateField = (name, value) => {
         switch (name) {
@@ -49,28 +59,27 @@ const PersonalInfo = ({ formData, handleInputChange }) => {
                 <h2 className="group-heading">
                     <span className="label">A</span> Personal Information
                 </h2>
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" name="name" value={formData.name || ''} onChange={handleFieldChange} required />
-                {errors.name && <div className="error-message">Please enter your name.</div>}
-
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" value={formData.email || ''} onChange={handleFieldChange} required />
+                <label className='text-white' htmlFor="name">Name:</label>
+                <input type="text" id="name" name="name" value={personalInfo.name || ''} onChange={handleFieldChange} required />
+                {errors.name && <div className="text-red-500">Please enter your name.</div>}
+                <label className='text-white' htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" value={personalInfo.email || ''} onChange={handleFieldChange} required />
                 {errors.email && <div className="error-message">Please enter a valid email address.</div>}
 
-                <label htmlFor="mobile">Mobile Number:</label>
-                <input type="text" id="mobile" name="mobile" value={formData.mobile || ''} onChange={handleFieldChange} required />
+                <label className='text-white' htmlFor="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" name="mobile" value={personalInfo.mobile || ''} onChange={handleFieldChange} required />
                 {errors.mobile && <div className="error-message">Please enter a valid 10-digit mobile number.</div>}
 
-                <label htmlFor="linkedin">LinkedIn:</label>
-                <input type="text" id="linkedin" name="linkedin" value={formData.linkedin || ''} onChange={handleFieldChange} required />
+                <label className='text-white' htmlFor="linkedin">LinkedIn:</label>
+                <input type="text" id="linkedin" name="linkedin" value={personalInfo.linkedin || ''} onChange={handleFieldChange} required />
                 {errors.linkedin && <div className="error-message">Please provide your LinkedIn link.</div>}
 
-                <label htmlFor="city">City:</label>
-                <input type="text" id="city" name="city" value={formData.city || ''} onChange={handleFieldChange} required />
+                <label className='text-white' htmlFor="city">City:</label>
+                <input type="text" id="city" name="city" value={personalInfo.city || ''} onChange={handleFieldChange} required />
                 {errors.city && <div className="error-message">Please enter your city.</div>}
 
-                <label htmlFor="country">Country:</label>
-                <input type="text" id="country" name="country" value={formData.country || ''} onChange={handleFieldChange} required />
+                <label className='text-white' htmlFor="country">Country:</label>
+                <input type="text" id="country" name="country" value={personalInfo.country || ''} onChange={handleFieldChange} required />
                 {errors.country && <div className="error-message">Please enter your country.</div>}
             </div>
         </>

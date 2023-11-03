@@ -1,16 +1,64 @@
 import React from 'react';
 import '../form.css';
+import { useAppContext } from './context/AppProvider';
 
-const WorkExp = ({
-    formData1,
-    formData2,
-    handleAddWorkExperience,
-    handleWorkExperienceChange,
-    handleRemoveWorkExperience,
-    handleAddCreateExp,
-    handleRemoveCreateExp,
-    handleCreateExpChange,
-}) => {
+const WorkExp = () => {
+    const {
+        workExperiences,
+        setWorkExperiences,
+        createExp,
+        setCreateExp,
+    } = useAppContext();
+
+    const handleAddCreateExp = () => {
+        setCreateExp([...createExp, {
+            id: createExp.length + 1,
+            userPrompt: '',
+        }]);
+    }
+
+    const handleCreateExpChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedCreateExp = [...createExp];
+        updatedCreateExp[index][name] = value;
+        setCreateExp(updatedCreateExp);
+    }
+
+
+    const handleRemoveCreateExp = (index) => {
+        setCreateExp((prevEducations) =>
+            prevEducations.filter((_, i) => i !== index)
+        );
+    };
+
+    const handleWorkExperienceChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedWorkExperiences = [...workExperiences];
+        updatedWorkExperiences[index][name] = value;
+        setWorkExperiences(updatedWorkExperiences);
+    };
+
+    const handleAddWorkExperience = () => {
+        setWorkExperiences((prevWorkExperiences) => [
+            ...prevWorkExperiences,
+            {
+                id: prevWorkExperiences.length + 1,
+                companyName: '',
+                city: '',
+                country: '',
+                startDate: '',
+                endDate: '',
+                titlePositionHeld: '',
+                workDescription: '',
+            },
+        ]);
+    };
+
+    const handleRemoveWorkExperience = (index) => {
+        setWorkExperiences((prevWorkExperiences) =>
+            prevWorkExperiences.filter((_, i) => i !== index)
+        );
+    };
 
     return (
         <>
@@ -18,7 +66,7 @@ const WorkExp = ({
                 <h2 className="group-heading">
                     <span className="label">C</span> Work Experience
                 </h2>
-                {formData1.workExperiences.map((experience, index) => (
+                {workExperiences.map((experience, index) => (
                     <div key={experience.id}>
                         {index > 0 && <div className="work-experience-space" />}
                         <h3 className="work-experience-heading">Work Experience {index + 1}</h3>
@@ -77,28 +125,28 @@ const WorkExp = ({
                             onChange={(event) => handleWorkExperienceChange(index, event)}
                         ></textarea>
 
-                        <button className='remove-buttons' type='button' onClick={() => handleRemoveWorkExperience(index)}>Remove Experience</button>
+                        <button className="px-4 py-2 m-5 text-white bg-red-500 rounded" type='button' onClick={() => handleRemoveWorkExperience(index)}>Remove Experience</button>
                     </div>
                 ))}
                 {
-                    formData2.createExp.map((exp1, index) => (
+                    createExp.map((exp1, index) => (
                         <div key={exp1.id}>
-                            <label>{`Your Prompt ${index+1}:`}</label>
+                            <label>{`Your Prompt ${index + 1}:`}</label>
                             <textarea
                                 name="userPrompt"
                                 value={exp1.userPrompt || ''}
                                 onChange={(event) => handleCreateExpChange(index, event)}
                             ></textarea>
-                            <button className='remove-buttons' onClick={() => handleRemoveCreateExp(index)}>Remove Created Experience</button>
+                            <button className="px-4 py-2 m-5 text-white bg-red-500 rounded" onClick={() => handleRemoveCreateExp(index)}>Remove Created Experience</button>
                         </div>
                     ))
                 }
 
-                <div className="add-work-experience">
-                    <button type='button' className='add-buttons' onClick={handleAddWorkExperience}>
+                <div className="flex justify-center gap-10">
+                    <button type='button' className="px-4 py-2 text-white bg-blue-500 rounded" onClick={handleAddWorkExperience}>
                         Add Work Experience
                     </button>
-                    <button className='add-buttons' type='button' onClick={handleAddCreateExp}>
+                    <button className="px-4 py-2 text-white bg-blue-500 rounded" type='button' onClick={handleAddCreateExp}>
                         Create Work Experience
                     </button>
                 </div>
