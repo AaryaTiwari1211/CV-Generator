@@ -18,10 +18,6 @@ const CV = ({ result }) => {
         navigate('/sopform');
     };
 
-    useEffect(() => {
-        console.log(personalInfo);
-    })
-
     function generateDocx() {
         const documentCreator = new DocumentCreator();
         toast.success('Download Started', {

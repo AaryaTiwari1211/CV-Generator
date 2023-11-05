@@ -83,19 +83,21 @@ const ProjectGPTFunction = async (text) => {
 	});
 	return response.data.choices[0].text;
 };
-
 const SOPGPTFunction = async (text) => {
 	const response = await openai.createCompletion({
 		model: "gpt-3.5-turbo-instruct",
 		prompt: text,
-		temperature: 0.5,
-		max_tokens: 75,
+		temperature: 0.6,
+		max_tokens: 600,
 		top_p: 1,
 		frequency_penalty: 1,
 		presence_penalty: 1,
 	});
 	return response.data.choices[0].text;
 };
+
+
+
 
 /*
 	?Explaination for the parameters used in the ChatGPTFunction:
@@ -178,7 +180,6 @@ app.post("/cv", async (req, res) => {
 	};
 
 	const createWorkExperience = async () => {
-		// const userWorkPrompt = "Create a work experience for me. I work at Google as a Business Analyst"
 		for (let i = 0; i < createExp.length; i++) {
 			let final_work_prompt = `I want a work description of 3 points in my CV. Use the data below to make one for me.
 			\n${createExp[i].userPrompt}`
@@ -216,7 +217,6 @@ app.post("/cv", async (req, res) => {
 	};
 
 	const createProjects = async () => {
-		// const userProjectPrompt = "Create a project for me. I made a project on Machine Learning"
 		for (let i = 0; i < createProject.length; i++) {
 			let final_project_prompt = `I want a project description of 2 points in my CV. Use the data below to make one for me.
 			${createProject[i].userPrompt}`
@@ -273,20 +273,28 @@ app.post("/cv", async (req, res) => {
 
 app.post('/sop', async (req, res) => {
 	// Process the SOP related data or generate an SOP here
-	const { questions } = req.body;
+	const { questions , formData } = req.body;
 	// Perform your SOP generation or processing logic here
-	if(questions.essays == "Yes")
-	{
-		questions.essays = "I have written essays on the following topics: \n\n"
-		for(let i=0; i<questions.essayTopics.length; i++)
-		{
-			questions.essays += `${i+1}. ${questions.essayTopics[i]} \n`
-		}
-		questions.essays += "\n"
+	const personalInfo = formData.personalInfo;
+	const educations = formData.educations[0];
+
+	const createSOP = async () => {
+		let create_SOP_prompt = `${personalInfo.firstName} ${formData.lastName} \n\n is writing an Statement of Purpose. I want you to act as a SOP writing expert with immense industrial knowledge and write an SOP using the following data:\n
+		1. ${personalInfo.name} is from ${personalInfo.city}${personalInfo.country} \n
+		2. ${personalInfo.name} is studying ${educations.degreeName} with a gpa of ${educations.gpa} \n}
+		3. ${personalInfo.name} is applying to ${questions.universityName} for ${questions.courseName} program \n}`
+
+		const create_SOP_response1 = await SOPGPTFunction(create_SOP_prompt);
+		console.log("SOP Response 1 from Model: ", create_SOP_response1)
+		questions.sop = create_SOP_response1;
 	}
+
+	await Promise.all([createSOP()]);
+
 	res.json({
 		message: "SOP request successful",
-		sop: questions,
+		sop: questions.sop,
+		formData: formData
 	});
 });
 

@@ -1,29 +1,32 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { useAppContext } from '../context/AppProvider'; 
-const SOP = ({ sopQuestions }) => {
-    const [essay, setEssay] = useState('')
-    const [personalityque, setPersonalityque] = useState('');
-    const [logincalque, setLogincalque] = useState('');
-    const [mathsque, setMathsque] = useState('');
-    const {
-        personalInfo,
-        setPersonalInfo,
-        educations,
-        setEducations,
-    } = useAppContext();
-    useEffect(() => {
-        console.log(personalInfo);
-    },[personalInfo])
+// import generateSOPDocument from '../sop-generator';
+import SOPDocumentCreator from '../sop-generator';
+import { Packer } from "docx";
+
+
+const SOP = ({ FinalSOPContent }) => {
+    console.log(FinalSOPContent);
+
+    const handleGenerateSOP = () => {
+        const sopDocumentCreator = new SOPDocumentCreator();
+        const sopDocument = sopDocumentCreator.createSOP(FinalSOPContent);
+        Packer.toBlob(sopDocument).then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "SOP.docx";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
+
     return (
-        <>
-            {sopQuestions.essays === 'Yes' && (
-                <>
+        <div>
+            <h1>Statement of Purpose</h1>
+            <button onClick={handleGenerateSOP}>Download SOP</button>
+        </div>
+    );
+};
 
-                </>
-            )}
-        </>
-    )
-}
-
-export default SOP
+export default SOP;

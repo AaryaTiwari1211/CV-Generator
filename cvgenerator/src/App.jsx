@@ -7,8 +7,7 @@ import logo from './assets/logo.png';
 import SOP from './components/SOP/SOP';
 function App() {
   const [result, setResult] = useState({});
-  const [sop, setSop] = useState({});
-  const [sopQuestions, setSopQuestions] = useState({});
+  const [FinalSOPContent, setFinalSOPContent] = useState("")
   return (
     <BrowserRouter>
       <div className='bg-[#333]'>
@@ -18,8 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<MainForm setResult={setResult} />} />
           <Route path="/cv" element={<CV result={result} />} />
-          <Route path='/sopform' element={<SOPForm setSopQuestions={setSopQuestions}/>} />
-          <Route path='/sop' element={<SOP sopQuestions={sopQuestions}/>} />
+          <Route path='/sopform' element={<SOPForm setFinalSOPContent={setFinalSOPContent} />} />
+          <Route path='/sop' element={<SOP FinalSOPContent={FinalSOPContent} />} />
         </Routes>
       </div>
     </BrowserRouter>
